@@ -1,12 +1,19 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 
 public class MainActivity extends AppCompatActivity {
     Button b1;
@@ -36,9 +43,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
-                firebase.signInWithEmailAndPassword(email,password);
-                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                startActivity(intent);
+                if (email.isEmpty() || password.isEmpty()){
+                    Toast.makeText(MainActivity.this, "Please fill out all fields.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                firebase.signInWithEmailAndPassword(email, password).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(MainActivity.this, "Incorrect Login.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                });
             }
         });
         b2.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +65,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
-                firebase.createUserWithEmailAndPassword(email,password);
+                if (email.isEmpty() || password.isEmpty()){
+                    Toast.makeText(MainActivity.this, "Please fill out all fields.", Toast.LENGTH_SHORT).show();
+                    return;}
+                else{
+                    firebase.createUserWithEmailAndPassword(email,password);
+                    Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }
