@@ -14,14 +14,6 @@ public class MainActivity extends AppCompatActivity {
     EditText inputEmail;
     EditText inputPassword;
     FirebaseAuth firebase;
-
-    public MainActivity() {
-        b1 = (Button) findViewById(R.id.loginto);
-        b2 = (Button) findViewById(R.id.newAccount);
-        inputEmail = (EditText) findViewById(R.id.Email);
-        inputPassword = (EditText) findViewById(R.id.Password);
-    }
-
     public void onStart(){
         super.onStart();
         if (firebase.getCurrentUser() != null){
@@ -34,8 +26,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+        b1 = (Button) findViewById(R.id.loginto);
+        b2 = (Button) findViewById(R.id.newAccount);
+        inputEmail = (EditText) findViewById(R.id.Email);
+        inputPassword = (EditText) findViewById(R.id.Password);
         firebase = FirebaseAuth.getInstance();
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
