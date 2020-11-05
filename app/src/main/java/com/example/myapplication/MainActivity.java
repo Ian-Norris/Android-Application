@@ -2,6 +2,8 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     EditText inputEmail;
     EditText inputPassword;
     FirebaseAuth firebase;
+    Toolbar toolbar;
     public void onStart(){
         super.onStart();
         if (firebase.getCurrentUser() != null){
@@ -35,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         b1 = (Button) findViewById(R.id.loginto);
         b2 = (Button) findViewById(R.id.newAccount);
+        toolbar = (Toolbar) findViewById(R.id.Wonder);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("The Wonder App");
+        toolbar.setSubtitle("Please login.");
         inputEmail = (EditText) findViewById(R.id.Email);
         inputPassword = (EditText) findViewById(R.id.Password);
         firebase = FirebaseAuth.getInstance();

@@ -19,11 +19,11 @@
 
     <TextView
         android:id="@+id/welcome"
-        android:layout_width="212dp"
-        android:layout_height="61dp"
+        android:layout_width="218dp"
+        android:layout_height="86dp"
+        android:background="@color/colorAccent"
         android:text="Welcome to our app. By James Dupree and Ian Norris"
         android:textAlignment="center"
-        android:background="@color/colorAccent"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/logout"
         app:layout_constraintEnd_toEndOf="parent"
