@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">The Wonder App</string>
+    <string name="Logout">Logout</string>
+    <string name="YourPosts">Your Posts</string>
 </resources>
