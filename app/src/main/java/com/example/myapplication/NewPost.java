@@ -2,10 +2,14 @@ package com.example.myapplication;
 
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -13,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class NewPost extends AppCompatActivity {
     Button b1;
@@ -20,7 +25,7 @@ public class NewPost extends AppCompatActivity {
     EditText price;
     EditText description;
     EditText contact;
-    private FirebaseFirestore mDb = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore mDb = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +42,52 @@ public class NewPost extends AppCompatActivity {
 
         String titleString = title.getText().toString();
         String priceString = price.getText().toString();
-        int priceInt = Integer.parseInt(priceString);
         String descriptionString = description.getText().toString();
         String contactString = contact.getText().toString();
 
+        if (titleString.isEmpty() || priceString.isEmpty() || descriptionString.isEmpty() || contactString.isEmpty()){
+            Toast.makeText(NewPost.this, "You must have all fields complete!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try{
+            int priceInt = Integer.parseInt(priceString);
+        }
+        catch(Exception e){
+            Toast.makeText(NewPost.this, "Please give a valid number for a price.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        int priceInt = Integer.parseInt(priceString);
+        if (priceInt < 0){
+            Toast.makeText(NewPost.this, "You must have a valid price!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (contactString.length() < 9 || contactString.length() >= 11){
+            Toast.makeText(NewPost.this, "Please give a valid number for a dsfsdcontact reference.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try{
+            int contactInt = Integer.parseInt(contactString);
+        }
+        catch (Exception e2){
+            Toast.makeText(NewPost.this, "Please give a valid number for a contact reference.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Posts p = new Posts(titleString, priceInt, descriptionString, contactString);
         Log.d("NewPost", "Submitted title:" + titleString + ", price" + priceString + ", description" + descriptionString + ", contact" + contactString);
-        mDb.collection("posts").add(p);
+        mDb.collection("posts").add(p).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Log.d("NewPost", "Entry added successfully");
+                Toast.makeText(NewPost.this, "Post submitted successfully.", Toast.LENGTH_SHORT).show();
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("NewPost", "Entry added failed");
+                        Toast.makeText(NewPost.this, "Post submission failed.", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
