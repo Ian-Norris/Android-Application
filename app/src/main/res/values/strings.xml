@@ -11,4 +11,10 @@
     <string name="newPost">New Post</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- Strings used for item details for post -->
+    <string name="itemContactNumber">Contact Number</string>
+    <string name="itemDescription">Description</string>
+    <string name="itemPrice">Price</string>
+    <string name="itemTitle">Title</string>
 </resources>
