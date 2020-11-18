@@ -68,7 +68,7 @@
         android:layout_height="47dp"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="7dp"
-        android:text="New Post"
+        android:text="@string/newPost"
         android:textSize="10sp"
         android:onClick="NewPost"
         android:background="@color/colorAccent"

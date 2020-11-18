@@ -35,12 +35,13 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        b2 = findViewById(R.id.newPost);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailActivity.this, NewPost.class);
+                startActivity(intent);
+            }
+        });
     }
-    b2.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-        }
-    });
-
 }

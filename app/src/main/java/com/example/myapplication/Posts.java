@@ -1,28 +1,20 @@
 package com.example.myapplication;
 
 public class Posts {
-    public String date;
-    public String title;
-    public double price;
-    public String description;
-    public String contact;
-    public int imageResource;
+    private String title;
+    private double price;
+    private String description;
+    private String contact;
 
-    public Posts(String date, double price, String title, String description, String contact, int imageResource) {
-        this.date = date;
+    public Posts(){
+
+    }
+
+    public Posts(String title, double price, String description, String contact) {
         this.title = title;
         this.price = price;
         this.description = description;
         this.contact = contact;
-        this.imageResource = imageResource;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public String getTitle() {
@@ -57,11 +49,4 @@ public class Posts {
         this.contact = contact;
     }
 
-    public int getImageResource() {
-        return imageResource;
-    }
-
-    public void setImageResource(int imageResource) {
-        this.imageResource = imageResource;
-    }
 }
