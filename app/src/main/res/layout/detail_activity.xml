@@ -47,6 +47,7 @@
         app:layout_constraintVertical_bias="0.975" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="396dp"
         android:layout_height="570dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,4 +61,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
+
+    <Button
+        android:id="@+id/newPost"
+        android:layout_width="65dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="7dp"
+        android:text="New Post"
+        android:textSize="10sp"
+        android:onClick="NewPost"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/YourPosts"
+        app:layout_constraintStart_toEndOf="@+id/logout"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
