@@ -2,8 +2,10 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity {
@@ -53,6 +56,18 @@ public class DetailActivity extends AppCompatActivity {
                 new ArrayList<Posts>()
         );
         postsListView.setAdapter(adapter);
+
+        postsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(DetailActivity.this, postView.class);
+                System.out.println(adapter.getItem(i));
+                //intent.putExtra("Posts", adapter.getItem(i));
+                startActivity(intent);
+            }
+        });
+
+        //End of ListView configuration
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +101,7 @@ public class DetailActivity extends AppCompatActivity {
                           Log.d(TAG, p.getTitle() + " " + p.getPrice());
                       }
                         Log.d(TAG, "Amount of post => " +  String.valueOf(posts.size()));
+                      adapter.clear();
                       adapter.addAll(posts);
                     }
                 });
