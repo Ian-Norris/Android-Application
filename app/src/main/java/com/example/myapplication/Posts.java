@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
+
 public class Posts {
     private String title;
     private double price;
@@ -49,4 +51,9 @@ public class Posts {
         this.contact = contact;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return this.title + " $" + String.format("%.2f", this.price);
+    }
 }

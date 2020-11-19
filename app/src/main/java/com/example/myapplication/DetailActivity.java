@@ -2,8 +2,11 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,13 +14,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.io.ByteArrayDataInput;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity {
     Toolbar toolbar;
     Button b2;
+
+    //Firebase values
+    private static final FirebaseFirestore mDb = FirebaseFirestore.getInstance();
+    private static final String POSTS = "posts";
+    private static final String TAG = "FirestoreListActivity";
+
+    private ArrayAdapter<Posts> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +44,16 @@ public class DetailActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.Wonder);
         setSupportActionBar(toolbar);
         toolbar.setTitle("The Wonder App");
+
+        //Setting up ListView
+        ListView postsListView = findViewById(R.id.itemPosts);
+        adapter = new ArrayAdapter<Posts>(
+                DetailActivity.this,
+                android.R.layout.simple_expandable_list_item_1,
+                new ArrayList<Posts>()
+        );
+        postsListView.setAdapter(adapter);
+
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,5 +71,24 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
+
+
+        //Getting data from firebase
+        mDb.collection(POSTS)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        ArrayList<Posts> posts = new ArrayList<>();
+                      for (QueryDocumentSnapshot document: queryDocumentSnapshots){
+                          Posts p = document.toObject(Posts.class);
+                          posts.add(p);
+                          Log.d(TAG, p.getTitle() + " " + p.getPrice());
+                      }
+                        Log.d(TAG, "Amount of post => " +  String.valueOf(posts.size()));
+                      adapter.addAll(posts);
+                    }
+                });
+
+    }//END OF onCreate
 }
