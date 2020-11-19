@@ -39,6 +39,8 @@ public class DetailActivity extends AppCompatActivity {
 
     private ArrayAdapter<Posts> adapter;
 
+    private ArrayList<Posts> posts;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,25 @@ public class DetailActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.Wonder);
         setSupportActionBar(toolbar);
         toolbar.setTitle("The Wonder App");
+        posts = new ArrayList<>();
+
+        //Getting data from firebase
+        mDb.collection(POSTS)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        //ArrayList<Posts> posts = new ArrayList<>();
+                        for (QueryDocumentSnapshot document: queryDocumentSnapshots){
+                            Posts p = document.toObject(Posts.class);
+                            posts.add(p);
+                            Log.d(TAG, p.getTitle() + " " + p.getPrice());
+                        }
+                        Log.d(TAG, "Amount of post => " +  String.valueOf(posts.size()));
+                        adapter.clear();
+                        adapter.addAll(posts);
+                    }
+                });
 
         //Setting up ListView
         ListView postsListView = findViewById(R.id.itemPosts);
@@ -61,6 +82,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(DetailActivity.this, postView.class);
+                intent.putExtra("Posts", posts.get(i));
                 startActivity(intent);
             }
         });
@@ -85,24 +107,6 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-
-        //Getting data from firebase
-        mDb.collection(POSTS)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        ArrayList<Posts> posts = new ArrayList<>();
-                        for (QueryDocumentSnapshot document: queryDocumentSnapshots){
-                            Posts p = document.toObject(Posts.class);
-                            posts.add(p);
-                            Log.d(TAG, p.getTitle() + " " + p.getPrice());
-                        }
-                        Log.d(TAG, "Amount of post => " +  String.valueOf(posts.size()));
-                        adapter.clear();
-                        adapter.addAll(posts);
-                    }
-                });
 
     }//END OF onCreate
 }
