@@ -61,8 +61,6 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(DetailActivity.this, postView.class);
-                System.out.println(adapter.getItem(i));
-                //intent.putExtra("Posts", adapter.getItem(i));
                 startActivity(intent);
             }
         });
@@ -95,14 +93,14 @@ public class DetailActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         ArrayList<Posts> posts = new ArrayList<>();
-                      for (QueryDocumentSnapshot document: queryDocumentSnapshots){
-                          Posts p = document.toObject(Posts.class);
-                          posts.add(p);
-                          Log.d(TAG, p.getTitle() + " " + p.getPrice());
-                      }
+                        for (QueryDocumentSnapshot document: queryDocumentSnapshots){
+                            Posts p = document.toObject(Posts.class);
+                            posts.add(p);
+                            Log.d(TAG, p.getTitle() + " " + p.getPrice());
+                        }
                         Log.d(TAG, "Amount of post => " +  String.valueOf(posts.size()));
-                      adapter.clear();
-                      adapter.addAll(posts);
+                        adapter.clear();
+                        adapter.addAll(posts);
                     }
                 });
 

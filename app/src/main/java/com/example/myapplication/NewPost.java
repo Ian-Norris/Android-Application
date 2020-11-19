@@ -50,36 +50,40 @@ public class NewPost extends AppCompatActivity {
             return;
         }
         try{
-            int priceInt = Integer.parseInt(priceString);
+            double priceDouble = Double.parseDouble(priceString);
         }
         catch(Exception e){
             Toast.makeText(NewPost.this, "Please give a valid number for a price.", Toast.LENGTH_SHORT).show();
             return;
         }
-        int priceInt = Integer.parseInt(priceString);
-        if (priceInt < 0){
+        double priceDouble = Double.parseDouble(priceString);
+        if (priceDouble < 0){
             Toast.makeText(NewPost.this, "You must have a valid price!", Toast.LENGTH_SHORT).show();
             return;
         }
         if (contactString.length() < 9 || contactString.length() >= 11){
-            Toast.makeText(NewPost.this, "Please give a valid number for a dsfsdcontact reference.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NewPost.this, "Please give a valid number for a contact reference including area code.", Toast.LENGTH_SHORT).show();
             return;
         }
         try{
-            int contactInt = Integer.parseInt(contactString);
+            double contactDouble = Double.parseDouble(contactString);
         }
         catch (Exception e2){
             Toast.makeText(NewPost.this, "Please give a valid number for a contact reference.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Posts p = new Posts(titleString, priceInt, descriptionString, contactString);
+        Posts p = new Posts(titleString, priceDouble, descriptionString, contactString);
         Log.d("NewPost", "Submitted title:" + titleString + ", price" + priceString + ", description" + descriptionString + ", contact" + contactString);
         mDb.collection("posts").add(p).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 Log.d("NewPost", "Entry added successfully");
                 Toast.makeText(NewPost.this, "Post submitted successfully.", Toast.LENGTH_SHORT).show();
+                title.setText("");
+                price.setText("");
+                description.setText("");
+                contact.setText("");
             }
         })
                 .addOnFailureListener(new OnFailureListener() {

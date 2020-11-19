@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 String password = inputPassword.getText().toString().trim();
                 if (email.isEmpty() || password.isEmpty()){
                     Toast.makeText(MainActivity.this, "Please fill out all fields.", Toast.LENGTH_SHORT).show();
-                    return;}
+                }
                 else{
                     firebase.createUserWithEmailAndPassword(email,password);
                     Intent intent = new Intent(MainActivity.this, DetailActivity.class);

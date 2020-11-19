@@ -2,7 +2,9 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 
-public class Posts {
+import java.io.Serializable;
+
+public class Posts implements Serializable {
     private String title;
     private double price;
     private String description;

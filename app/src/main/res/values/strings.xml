@@ -16,5 +16,6 @@
     <string name="itemContactNumber">Contact Number</string>
     <string name="itemDescription">Description</string>
     <string name="itemPrice">Price</string>
+    <string name="submitNewPost">Submit</string>
     <string name="itemTitle">Title</string>
 </resources>
