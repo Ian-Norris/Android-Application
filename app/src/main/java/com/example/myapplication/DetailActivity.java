@@ -69,6 +69,26 @@ public class DetailActivity extends AppCompatActivity {
                     }
                 });
 
+
+        posts = new ArrayList<>();
+        //Getting data from firebase
+        mDb.collection(POSTS)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        //ArrayList<Posts> posts = new ArrayList<>();
+                        for (QueryDocumentSnapshot document: queryDocumentSnapshots){
+                            Posts p = document.toObject(Posts.class);
+                            posts.add(p);
+                            Log.d(TAG, p.getTitle() + " " + p.getPrice());
+                        }
+                        Log.d(TAG, "Amount of post => " +  String.valueOf(posts.size()));
+                        adapter.clear();
+                        adapter.addAll(posts);
+                    }
+                });
+
         //Setting up ListView
         ListView postsListView = findViewById(R.id.itemPosts);
         adapter = new ArrayAdapter<Posts>(
