@@ -2,30 +2,19 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.common.io.ByteArrayDataInput;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity {
@@ -36,9 +25,7 @@ public class DetailActivity extends AppCompatActivity {
     private static final FirebaseFirestore mDb = FirebaseFirestore.getInstance();
     private static final String POSTS = "posts";
     private static final String TAG = "FirestoreListActivity";
-
     private ArrayAdapter<Posts> adapter;
-
     private ArrayList<Posts> posts;
 
     @Override
@@ -50,6 +37,8 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle("The Wonder App");
         posts = new ArrayList<>();
+        final String email = getIntent().getStringExtra("CurrentUserEmail");
+
 
         //Getting data from firebase
         mDb.collection(POSTS)
@@ -123,6 +112,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DetailActivity.this, NewPost.class);
+                intent.putExtra("CurrentUserEmail", email);
                 startActivity(intent);
             }
         });

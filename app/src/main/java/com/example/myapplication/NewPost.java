@@ -1,23 +1,19 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 
 public class NewPost extends AppCompatActivity {
     Button b1;
@@ -44,6 +40,8 @@ public class NewPost extends AppCompatActivity {
         String priceString = price.getText().toString();
         String descriptionString = description.getText().toString();
         String contactString = contact.getText().toString();
+        String email = getIntent().getStringExtra("CurrentUserEmail");
+
 
         if (titleString.isEmpty() || priceString.isEmpty() || descriptionString.isEmpty() || contactString.isEmpty()){
             Toast.makeText(NewPost.this, "You must have all fields complete!", Toast.LENGTH_SHORT).show();
@@ -73,7 +71,7 @@ public class NewPost extends AppCompatActivity {
             return;
         }
 
-        Posts p = new Posts(titleString, priceDouble, descriptionString, contactString);
+        Posts p = new Posts(titleString, priceDouble, descriptionString, contactString, email);
         Log.d("NewPost", "Submitted title:" + titleString + ", price" + priceString + ", description" + descriptionString + ", contact" + contactString);
         mDb.collection("posts").add(p).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override

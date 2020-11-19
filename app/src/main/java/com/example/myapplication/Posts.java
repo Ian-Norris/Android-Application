@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
-
 import java.io.Serializable;
 
 public class Posts implements Serializable {
@@ -9,16 +8,18 @@ public class Posts implements Serializable {
     private double price;
     private String description;
     private String contact;
+    private String email;
 
     public Posts(){
 
     }
 
-    public Posts(String title, double price, String description, String contact) {
+    public Posts(String title, double price, String description, String contact, String email) {
         this.title = title;
         this.price = price;
         this.description = description;
         this.contact = contact;
+        this.email = email;
     }
 
     public String getTitle() {
@@ -51,6 +52,14 @@ public class Posts implements Serializable {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @NonNull

@@ -18,4 +18,5 @@
     <string name="itemPrice">Price</string>
     <string name="submitNewPost">Submit</string>
     <string name="itemTitle">Title</string>
+    <string name="email">Email</string>
 </resources>

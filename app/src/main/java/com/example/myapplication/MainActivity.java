@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         if (firebase.getCurrentUser() != null){
             Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+            intent.putExtra("CurrentUserEmail", firebase.getCurrentUser().getEmail());
             startActivity(intent);
         };
     }
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = inputEmail.getText().toString().trim();
+                final String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
                 if (email.isEmpty() || password.isEmpty()){
                     Toast.makeText(MainActivity.this, "Please fill out all fields.", Toast.LENGTH_SHORT).show();
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Incorrect Login.", Toast.LENGTH_SHORT).show();
                         } else {
                             Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                            intent.putExtra("CurrentUserEmail", inputEmail.getText().toString());
                             startActivity(intent);
                         }
                     }
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     firebase.createUserWithEmailAndPassword(email,password);
                     Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                    intent.putExtra("CurrentUserEmail", inputEmail.getText().toString());
                     startActivity(intent);
                 }
             }

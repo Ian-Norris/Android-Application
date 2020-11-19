@@ -16,16 +16,20 @@ public class postView extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle("The Wonder App");
         Posts post = (Posts)getIntent().getSerializableExtra("Posts");
+        String email = post.getEmail();
+
 
         TextView t1 = findViewById(R.id.itemTitle);
         TextView t2 = findViewById(R.id.textView2);
         TextView t3 = findViewById(R.id.textView3);
         TextView t4 = findViewById(R.id.textView4);
+        TextView t5 = findViewById(R.id.textView5);
 
         t1.setText(post.getTitle());
         t2.setText(post.getDescription());
         t4.setText(Double.toString(post.getPrice()));
         String phoneNumberFormatted = post.getContact().replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
         t3.setText(phoneNumberFormatted);
+        t5.setText(email);
     }
 }
