@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:background="@color/defaultWhite">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/Wonder"
@@ -23,7 +23,7 @@
         android:layout_width="191dp"
         android:layout_height="55dp"
         android:layout_marginTop="70dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/button_border"
         android:onClick="onSubmitClick"
         android:text="@string/submitNewPost"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,6 +38,7 @@
         android:layout_height="69dp"
         android:ems="10"
         android:hint="@string/itemTitle"
+        android:textColorHint="@color/black"
         android:background="#FFFFFF"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="@+id/submitNewPost"
@@ -54,6 +55,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="@string/itemPrice"
+        android:textColorHint="@color/black"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,6 +70,7 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/itemDescription"
+        android:textColorHint="@color/black"
         android:background="#FFFFFF"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -83,6 +86,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="@string/itemContactNumber"
+        android:textColorHint="@color/black"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
