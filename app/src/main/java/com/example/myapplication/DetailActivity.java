@@ -106,7 +106,13 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Button b4 = findViewById(R.id.refresh);
+        b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
 
     }//END OF onCreate
 }

@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -10,7 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class postViewEditable extends AppCompatActivity {
 
@@ -25,7 +29,8 @@ public class postViewEditable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_view_editable);
-        Posts post = (Posts)getIntent().getSerializableExtra("Posts");
+        final Posts post = (Posts)getIntent().getSerializableExtra("Posts");
+        final String postID = (String) getIntent().getSerializableExtra("PostIDs");
 
         eTitle = findViewById(R.id.editTitle2);
         eDesc = findViewById(R.id.textView2);
@@ -37,6 +42,24 @@ public class postViewEditable extends AppCompatActivity {
         ePrice.setText(Double.toString(post.getPrice()));
         eContact.setText(post.getContact());
 
+        Button b2 = findViewById(R.id.deletePost);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDb.collection("posts").document(postID).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(postViewEditable.this, "Post deleted", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(postViewEditable.this, "Error deleting post", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        });
         Button b3 = findViewById(R.id.updatePost);
         b3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +70,6 @@ public class postViewEditable extends AppCompatActivity {
                 String descriptionString = eDesc.getText().toString();
                 String contactString = eContact.getText().toString();
                 String email = getIntent().getStringExtra("CurrentUserEmail");
-
 
                 if (titleString.isEmpty() || priceString.isEmpty() || descriptionString.isEmpty() || contactString.isEmpty()){
                     Toast.makeText(postViewEditable.this, "You must have all fields complete!", Toast.LENGTH_SHORT).show();
@@ -77,7 +99,19 @@ public class postViewEditable extends AppCompatActivity {
                     return;
                 }
 
-                // mDb.collection("posts").document(email).set()
+                Posts p = new Posts(titleString,priceDouble,descriptionString,contactString,email);
+                mDb.collection("posts").document(postID).set(p).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(postViewEditable.this, "Post updated successfully.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(postViewEditable.this, "Post failed to update.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
             }
         });

@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,10 +16,13 @@ import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class editPosts extends AppCompatActivity {
@@ -28,7 +33,7 @@ public class editPosts extends AppCompatActivity {
     private static final String TAG = "FirestoreListActivity";
     private ArrayAdapter<Posts> adapter;
     private ArrayList<Posts> posts;
-
+    private ArrayList<QueryDocumentSnapshot> postIDs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +42,9 @@ public class editPosts extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.Wonder);
         setSupportActionBar(toolbar);
         toolbar.setTitle("The Wonder App");
+
         posts = new ArrayList<>();
+        postIDs = new ArrayList<>();
         final String email = getIntent().getStringExtra("CurrentUserEmail");
 
         //Getting data from firebase
@@ -46,11 +53,11 @@ public class editPosts extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        //ArrayList<Posts> posts = new ArrayList<>();
                         for (QueryDocumentSnapshot document: queryDocumentSnapshots){
                             Posts p = document.toObject(Posts.class);
                             if (p.getEmail().equals(email)){
                                 posts.add(p);
+                                postIDs.add(document);
                                 Log.d(TAG, p.getTitle() + " " + p.getPrice());
                             }
                         }
@@ -73,6 +80,8 @@ public class editPosts extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(editPosts.this, postViewEditable.class);
                 intent.putExtra("Posts", posts.get(i));
+                intent.putExtra("PostIDs", postIDs.get(i).getId());
+                intent.putExtra("CurrentUserEmail", email);
                 startActivity(intent);
             }
         });

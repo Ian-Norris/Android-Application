@@ -22,4 +22,6 @@
     <string name="email">Email</string>
     <string name="desc">Desc</string>
     <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="refresh">Refresh</string>
 </resources>
