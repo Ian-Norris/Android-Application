@@ -1,11 +1,16 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class postView extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
@@ -15,8 +20,8 @@ public class postView extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.Wonder);
         setSupportActionBar(toolbar);
         toolbar.setTitle("The Wonder App");
-        Posts post = (Posts)getIntent().getSerializableExtra("Posts");
-        String email = post.getEmail();
+        final Posts post = (Posts)getIntent().getSerializableExtra("Posts");
+        final String email = post.getEmail();
 
 
         TextView t1 = findViewById(R.id.itemTitle);
@@ -31,5 +36,17 @@ public class postView extends AppCompatActivity {
         String phoneNumberFormatted = post.getContact().replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
         t3.setText(phoneNumberFormatted);
         t5.setText(email);
+
+        final Button b1 = findViewById(R.id.emailSeller);
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[] { email });
+                intent.putExtra(Intent.EXTRA_SUBJECT, post.getTitle());
+                startActivity(Intent.createChooser(intent, ""));
+            }
+        });
     }
 }

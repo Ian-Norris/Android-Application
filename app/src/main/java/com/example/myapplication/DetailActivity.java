@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -66,8 +67,8 @@ public class DetailActivity extends AppCompatActivity {
                 android.R.layout.simple_expandable_list_item_1,
                 new ArrayList<Posts>()
         );
-        postsListView.setAdapter(adapter);
 
+        postsListView.setAdapter(adapter);
         postsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -106,11 +107,46 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        // REFRESH BUTTON
         Button b4 = findViewById(R.id.refresh);
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mDb.collection(POSTS)
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                //ArrayList<Posts> posts = new ArrayList<>();
+                                for (QueryDocumentSnapshot document: queryDocumentSnapshots){
+                                    Posts p = document.toObject(Posts.class);
+                                    posts.add(p);
+                                    Log.d(TAG, p.getTitle() + " " + p.getPrice());
+                                }
+                                Log.d(TAG, "Amount of post => " +  String.valueOf(posts.size()));
+                                adapter.clear();
+                                adapter.addAll(posts);
+                            }
+                        });
+                //Setting up ListView
+                ListView postsListView = findViewById(R.id.itemPosts);
+                adapter = new ArrayAdapter<Posts>(
+                        DetailActivity.this,
+                        android.R.layout.simple_expandable_list_item_1,
+                        new ArrayList<Posts>()
+                );
 
+                postsListView.setAdapter(adapter);
+                postsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Intent intent = new Intent(DetailActivity.this, postView.class);
+                        intent.putExtra("Posts", posts.get(i));
+                        startActivity(intent);
+                    }
+                });
             }
         });
 

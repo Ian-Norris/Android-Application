@@ -24,4 +24,6 @@
     <string name="update">Update</string>
     <string name="delete">Delete</string>
     <string name="refresh">Refresh</string>
+    <string name="email_seller">Email seller</string>
+    <string name="search">Search posts</string>
 </resources>
