@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".postViewEditable"></activity>
+        <activity android:name=".editPosts" />
         <activity
             android:name=".NewPost"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -22,6 +24,5 @@
         <activity android:name=".DetailActivity" />
         <activity android:name=".postView" />
     </application>
-
 
 </manifest>

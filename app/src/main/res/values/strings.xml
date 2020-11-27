@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">The Wonder App</string>
     <string name="Logout">Logout</string>
+    <string name="Edit">Edit Postings</string>
     <string name="YourPosts">Your Posts</string>
     <string name="title_activity_new_post">NewPost</string>
     <!-- Strings used for fragments for navigation -->
@@ -19,4 +20,6 @@
     <string name="submitNewPost">Submit</string>
     <string name="itemTitle">Title</string>
     <string name="email">Email</string>
+    <string name="desc">Desc</string>
+    <string name="update">Update</string>
 </resources>
