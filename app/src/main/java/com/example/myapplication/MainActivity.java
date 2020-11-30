@@ -74,6 +74,13 @@ public class MainActivity extends AppCompatActivity {
                 if (email.isEmpty() || password.isEmpty()){
                     Toast.makeText(MainActivity.this, "Please fill out all fields.", Toast.LENGTH_SHORT).show();
                 }
+
+                else if (!email.contains("@")){
+                    Toast.makeText(MainActivity.this, "Please give a valid email.", Toast.LENGTH_SHORT).show();
+                }
+                else if(password.length() < 6){
+                    Toast.makeText(MainActivity.this, "Password needs to be greater than six characters.", Toast.LENGTH_SHORT).show();
+                }
                 else{
                     firebase.createUserWithEmailAndPassword(email,password);
                     Intent intent = new Intent(MainActivity.this, DetailActivity.class);
