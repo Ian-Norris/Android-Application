@@ -39,7 +39,7 @@ public class postViewEditable extends AppCompatActivity {
 
         eTitle.setText(post.getTitle());
         eDesc.setText(post.getDescription());
-        ePrice.setText(Double.toString(post.getPrice()));
+        ePrice.setText("$" + String.format("%.2f", post.getPrice()));
         eContact.setText(post.getContact());
 
         Button b2 = findViewById(R.id.deletePost);

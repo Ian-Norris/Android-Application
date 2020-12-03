@@ -41,6 +41,13 @@ public class NewPost extends AppCompatActivity {
         String priceString = price.getText().toString();
         String descriptionString = description.getText().toString();
         String contactString = contact.getText().toString();
+
+        if(getIntent().getStringExtra("CurrentUserEmail") == null)
+        {
+            //Sends user back to home page if somehow they were logged in without an account.
+            Intent intent = new Intent(NewPost.this, DetailActivity.class);
+            startActivity(intent);
+        }
         String email = getIntent().getStringExtra("CurrentUserEmail");
 
 
