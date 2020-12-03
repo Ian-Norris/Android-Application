@@ -8,6 +8,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -78,6 +80,23 @@ public class DetailActivity extends AppCompatActivity {
         });
 
         //End of ListView configuration
+
+        //Setting up search bar
+        SearchView search = findViewById(R.id.mainSearch);
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
+
+                return false;
+            }
+        });
+        //END OF SEARCH BAR
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
