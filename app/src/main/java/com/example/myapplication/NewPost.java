@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -91,5 +92,9 @@ public class NewPost extends AppCompatActivity {
                         Toast.makeText(NewPost.this, "Post submission failed.", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+        //Sends user back to home page
+        Intent intent = new Intent(NewPost.this, DetailActivity.class);
+        startActivity(intent);
     }
 }

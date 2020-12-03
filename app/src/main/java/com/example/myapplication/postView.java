@@ -32,7 +32,7 @@ public class postView extends AppCompatActivity {
 
         t1.setText(post.getTitle());
         t2.setText(post.getDescription());
-        t4.setText(Double.toString(post.getPrice()));
+        t4.setText("$" + String.format("%.2f", post.getPrice()));
         String phoneNumberFormatted = post.getContact().replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
         t3.setText(phoneNumberFormatted);
         t5.setText(email);

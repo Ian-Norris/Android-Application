@@ -74,7 +74,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(DetailActivity.this, postView.class);
-                intent.putExtra("Posts", posts.get(i));
+                intent.putExtra("Posts", adapter.getItem(i));
                 startActivity(intent);
             }
         });
@@ -132,6 +132,7 @@ public class DetailActivity extends AppCompatActivity {
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                posts.clear();
                 mDb.collection(POSTS)
                         .get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -148,23 +149,6 @@ public class DetailActivity extends AppCompatActivity {
                                 adapter.addAll(posts);
                             }
                         });
-                //Setting up ListView
-                ListView postsListView = findViewById(R.id.itemPosts);
-                adapter = new ArrayAdapter<Posts>(
-                        DetailActivity.this,
-                        android.R.layout.simple_expandable_list_item_1,
-                        new ArrayList<Posts>()
-                );
-
-                postsListView.setAdapter(adapter);
-                postsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent = new Intent(DetailActivity.this, postView.class);
-                        intent.putExtra("Posts", posts.get(i));
-                        startActivity(intent);
-                    }
-                });
             }
         });
 
