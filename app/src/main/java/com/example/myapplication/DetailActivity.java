@@ -24,7 +24,7 @@ public class DetailActivity extends AppCompatActivity {
     Button b2;
     Button b3;
 
-    //Firebase values
+    //Firebase values   
     private final FirebaseFirestore mDb = FirebaseFirestore.getInstance();
     private static final String POSTS = "posts";
     private static final String TAG = "FirestoreListActivity";
